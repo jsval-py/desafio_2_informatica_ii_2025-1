@@ -1,5 +1,5 @@
-#ifndef GESTORRESERVAS_H
-#define GESTORRESERVAS_H
+#ifndef GESTORDBH_H
+#define GESTORDBH_H
 #include "Fecha.h"
 
 // Declaraciones adelantadas
@@ -24,4 +24,4 @@ public:
     Reserva* consultarReservaPorAnfitrion(Anfitrion* anf, Fecha fechaInicio, Fecha fechaFin);
     int actualizarHistorico(Fecha fechaHoy);
 };
-#endif // GESTORRESERVAS_H
+#endif // GESTORDBH_H

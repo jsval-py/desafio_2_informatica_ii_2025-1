@@ -1,0 +1,5 @@
+#ifndef HABITACIONES_H
+#define HABITACIONES_H
+
+
+#endif // HABITACIONES_H

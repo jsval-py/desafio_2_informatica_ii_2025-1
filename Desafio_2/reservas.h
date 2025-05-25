@@ -1,5 +1,5 @@
-#ifndef RESERVA_H
-#define RESERVA_H
+#ifndef RESERVAS_H
+#define RESERVAS_H
 
 #include "Fecha.h"
 
@@ -34,4 +34,4 @@ public:
     bool anularReserva();
 };
 
-#endif // RESERVA_H
+#endif // RESERVAS_H
