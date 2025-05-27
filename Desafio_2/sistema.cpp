@@ -10,7 +10,10 @@
 Sistema::Sistema(){
     numIdentidad= "";
     password= "";
-    tipoUsuarioActual = 0; // 1 para huésped, 2 para anfitrión
+    usuarioActual = "";
+    tipoUsuarioActual = 0;
+    huesped = nullptr;
+    anfitrion = nullptr;
     std::cout<<"Bienvenido a UdeaStay"<<std::endl;
 }
 
@@ -18,8 +21,10 @@ Sistema::Sistema(){
 Sistema::~Sistema(){
 }
 
+
 //Metodos
 bool Sistema::validarUsuarioDB(const std::string& numIdentidad, const std::string& password, int& tipoUsuarioIdentificado, float& puntuacion, int& antiguedad) {
+    usuarioActual = numIdentidad;
     std::ifstream archivo("C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/usuarios.txt");
     if (!archivo) {
         std::cout << "Error al abrir el archivo de usuarios." << std::endl;
@@ -132,6 +137,16 @@ void Sistema::cargarDBUsuarios (const std::string& numIdentidad, int tipoUsuario
     }
 
     archivo.close();
+}
+
+std::string Sistema::getUsuarioActual() const {
+    if (tipoUsuarioActual == 1 && huesped != nullptr) {
+        return huesped->getnumIdentidad();
+        return "";
+    } else if (tipoUsuarioActual == 2 && anfitrion != nullptr) {
+        return anfitrion->getnumIdentidad();
+    }
+    return "";
 }
 
 bool Sistema::acceso (const std::string& usuario, const std::string& password) {

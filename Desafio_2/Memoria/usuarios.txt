@@ -1,4 +1,10 @@
-1064100000,pass1234,Juan Pérez,huesped,5.0,1
-1066700000,pass4567,María García,huesped,5.0,4
-1063500000,host1234,Carlos López,anfitrion,4.0,6
-1056500000,anf4567,Ana Martínez,anfitrion,4.5,2
+123456789,pass123,Juan Pérez,huesped,4.5,2
+987654321,host456,María González,anfitrion,4.8,5
+111222333,guest789,Carlos Rodríguez,huesped,4.2,1
+444555666,owner321,Ana López,anfitrion,4.9,3
+777888999,travel654,Pedro Martínez,huesped,3.8,4
+101112131,rental987,Laura Fernández,anfitrion,4.7,6
+141516171,visit234,Roberto Silva,huesped,4.3,2
+181920212,property567,Carmen Jiménez,anfitrion,4.6,4
+222324252,stay890,Diego Torres,huesped,4.1,1
+262728293,lodge123,Sofía Morales,anfitrion,4.8,7

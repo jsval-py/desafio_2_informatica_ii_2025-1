@@ -32,16 +32,16 @@ void InicioSesion(Sistema& sistema) {
             switch (opcion)
             {
                 case 1:
-                    // Aquí se puede implementar la lógica para consultar habitaciones
-                    cout << "Consultando habitaciones..." << endl;
+                    // Aquí se puede implementar la lógica o el atributo para crear una reserva
+                    cout << "Creando reserva..." << endl;
                     break;
                 case 2:
-                    // Aquí se puede implementar la lógica para realizar una reserva
+                    // Aquí se puede implementar la lógica o el atributo para cancelar una reserva
                     cout << "Realizando una reserva..." << endl;
                     break;
                 case 3:
-                    // Aquí se puede implementar la lógica para cancelar una reserva
-                    cout << "Cancelando una reserva..." << endl;
+                    // Aquí se puede implementar la logica o el atributo para consultar las habitaciones que estan disponibles
+                    cout << "Consultando habitaciones disponibles" << endl;
                     break;
                 default:
                     cout << "Opción no válida." << endl;
@@ -49,6 +49,30 @@ void InicioSesion(Sistema& sistema) {
             }
         } else if (sistema.getTipoUsuarioActual() == 2) {
             sistema.mostrarMenuAnfitrion();
+            int opcion;
+            cout<<"Selecciona una opcion"<<endl;
+            cin >> opcion;
+            cin.ignore();
+            switch (opcion)
+            {
+            case 1:
+            {
+                // Opción 1: Consultar habitaciones del anfitrión
+                // Ya tienes el anfitrión cargado en el sistema, simplemente llama al método
+                // Pero necesitas acceder al objeto anfitrion del sistema
+
+                // Alternativa 1: Crear un anfitrión temporal (más simple)
+                Anfitrion anfitrionTemp;
+                anfitrionTemp.setnumIdentidad(sistema.getUsuarioActual());
+                anfitrionTemp.consultarHabitaciones(&sistema);
+            }
+            case 2:
+                cout << "Cerrando sesión..." << endl;
+                return; // O break según tu lógica de navegación
+            default:
+                cout << "Opción no válida." << endl;
+                break;
+            }
         }
     } else {
         cout << "Usuario o contraseña incorrectos." << endl;

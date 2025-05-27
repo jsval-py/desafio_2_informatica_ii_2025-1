@@ -20,6 +20,7 @@ private:
     double precioNoche;
     std::string amenidades[MAX_AMENIDADES];
     Anfitrion* anfitrion;
+    Sistema* sistema;
 
 public:
     // Constructores

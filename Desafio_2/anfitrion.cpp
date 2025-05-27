@@ -46,29 +46,19 @@ void Anfitrion::setCalificacion(float cal) { calificacion = cal; }
 void Anfitrion::setnumIdentidad(const std::string& id) { numIdentidad = id; }
 
 // Métodos
+/*consultar habitaciones usando la clase habitacion, desde ahí se cargan todas las habitaciones que pertenezcan al
+ * anfitrion que está consultando las habitaciones, utilizando los metodos que están en la clase habitacion.cpp*/
 void Anfitrion::consultarHabitaciones(Sistema* sistema) {
-    std::cout << "\n=== HABITACIONES DEL ANFITRIÓN: " << nombre << " ===" << std::endl;
-
-    // Crear arreglo para almacenar las habitaciones del anfitrión
     Habitacion habitacionesDelAnfitrion[MAX_HABITACIONES];
+    int totalHabitaciones = Habitacion::obtenerHabitacionesPorAnfitrion(sistema, numIdentidad, habitacionesDelAnfitrion, MAX_HABITACIONES);
 
-    // Obtener las habitaciones que pertenecen a este anfitrión
-    int numHabitaciones = Habitacion::obtenerHabitacionesPorAnfitrion(sistema, numIdentidad,
-                                                                      habitacionesDelAnfitrion, MAX_HABITACIONES);
-
-    if (numHabitaciones == 0) {
-        std::cout << "No tiene habitaciones registradas en el sistema." << std::endl;
+    if (totalHabitaciones == 0) {
+        std::cout << "No hay habitaciones registradas para este anfitrión." << std::endl;
         return;
     }
 
-    std::cout << "Sus habitaciones registradas:\n" << std::endl;
-
-    // Mostrar cada habitación usando el método de la clase Habitacion
-    for (int i = 0; i < numHabitaciones; i++) {
-        std::cout << "--- HABITACIÓN " << (i + 1) << " ---" << std::endl;
+    std::cout << "Habitaciones del anfitrión " << nombre << ":" << std::endl;
+    for (int i = 0; i < totalHabitaciones; ++i) {
         habitacionesDelAnfitrion[i].mostrarInformacion();
-        std::cout << "--------------------------------" << std::endl;
     }
-
-    std::cout << "\nTotal de habitaciones: " << numHabitaciones << std::endl;
 }

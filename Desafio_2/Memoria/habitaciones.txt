@@ -1,0 +1,10 @@
+H001,Casa Centro Histórico,Casa completa,Calle 50 #25-30,Medellín,Antioquia,WiFi;Cocina;Aire acondicionado;TV,120000,987654321
+H002,Apartamento Poblado,Apartamento,Carrera 43A #5-15,Medellín,Antioquia,WiFi;Piscina;Gimnasio;Parqueadero,150000,444555666
+H003,Cabaña Guatapé,Cabaña,Vereda El Peñón Km 2,Guatapé,Antioquia,WiFi;Chimenea;Jacuzzi;Vista al lago,200000,101112131
+H004,Loft Laureles,Loft,Circular 4 #70-25,Medellín,Antioquia,WiFi;Cocina;Balcón;TV,95000,181920212
+H005,Casa Familiar Envigado,Casa completa,Calle 30 Sur #45-20,Envigado,Antioquia,WiFi;Cocina;Jardín;Parqueadero;Lavandería,180000,262728293
+H006,Estudio Sabaneta,Estudio,Carrera 45 #67-12,Sabaneta,Antioquia,WiFi;Cocina;Aire acondicionado,80000,987654321
+H007,Penthouse El Poblado,Penthouse,Carrera 43B #9-50,Medellín,Antioquia,WiFi;Piscina;Terraza;Jacuzzi;Aire acondicionado;Parqueadero,300000,444555666
+H008,Casa Rionegro,Casa completa,Calle 52 #48-31,Rionegro,Antioquia,WiFi;Cocina;Jardín;Chimenea;Parqueadero,140000,101112131
+H009,Apartamento La Estrella,Apartamento,Carrera 50 #76-18,La Estrella,Antioquia,WiFi;Cocina;Balcón;TV,110000,181920212
+H010,Villa Barbosa,Villa,Calle 20 #15-45,Barbosa,Antioquia,WiFi;Piscina;Jardín;Cocina;Chimenea;Parqueadero,250000,262728293

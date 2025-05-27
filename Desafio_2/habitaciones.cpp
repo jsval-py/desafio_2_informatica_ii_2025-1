@@ -19,6 +19,7 @@ Habitacion::Habitacion() {
     }
     precioNoche = 0.0;
     anfitrion = nullptr;
+    sistema = nullptr;
 }
 
 Habitacion::Habitacion(const std::string& id, const std::string& nombre, const std::string& tipo, const std::string& dir,
@@ -35,6 +36,7 @@ Habitacion::Habitacion(const std::string& id, const std::string& nombre, const s
     departamento = depto;
     precioNoche = precio;
     this->anfitrion = anfitrion; // Asignar el anfitrión
+    this->sistema = nullptr; // Initialize sistema
 }
 
 Habitacion::~Habitacion() {
@@ -129,12 +131,21 @@ void Habitacion::mostrarInformacion() const {
     std::cout << "Departamento: " << departamento << std::endl;
     std::cout << "Amenidades: " << getAmenidades() << std::endl;
     std::cout << "Precio por noche: $" << precioNoche << std::endl;
+    if (anfitrion != nullptr) {
+        std::cout << "Anfitrión: " << anfitrion->getNombre() << " (ID: " << anfitrion->getnumIdentidad() << ")" << std::endl;
+    }
 }
 
-Anfitrion* Habitacion::buscarAnfitrionporId(Sistema* sistema, const std::string& idAnfitrionStr){
-    std::ifstream archivo("usuarios.txt");
+Anfitrion* Habitacion::buscarAnfitrionporId(Sistema*, const std::string& idAnfitrionStr){
+    // Primero intentamos con ruta relativa
+    std::ifstream archivo("habitaciones.txt");
     if (!archivo.is_open()) {
-        return nullptr;
+        // Si no funciona, intentamos con la ruta absoluta
+        archivo.open("C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/usuarios.txt");
+        if (!archivo.is_open()) {
+            std::cerr << "Error: No se pudo abrir el archivo de usuarios" << std::endl;
+            return nullptr;
+        }
     }
 
     std::string linea;
@@ -166,20 +177,32 @@ Anfitrion* Habitacion::buscarAnfitrionporId(Sistema* sistema, const std::string&
 
 // Método estático para cargar todas las habitaciones desde la base de datos
 int Habitacion::cargarTodasLasHabitaciones(Sistema* sistema, Habitacion habitaciones[], int maxHabitaciones) {
+    // Primero intentamos con ruta relativa
     std::ifstream archivo("habitaciones.txt");
-
     if (!archivo.is_open()) {
-        std::cout << "Error: No se pudo abrir el archivo habitaciones.txt" << std::endl;
-        return 0;
+        // Si no funciona, intentamos con la ruta absoluta
+        archivo.open("C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/habitaciones.txt");
+        if (!archivo.is_open()) {
+            std::cout << "Error: No se pudo abrir el archivo habitaciones.txt" << std::endl;
+            return 0;
+        }
     }
+
+    std::cout << "Cargando habitaciones desde la base de datos..." << std::endl;
 
     std::string linea;
     int contador = 0;
 
     while (std::getline(archivo, linea) && contador < maxHabitaciones) {
+        // Verificar que la línea no esté vacía
+        if (linea.empty()) {
+            continue;
+        }
+
         std::string id, nombre, tipo, dir, muni, depto, amenidadesStr, precioStr, idAnfitrionStr;
         std::istringstream iss(linea);
 
+        // Parse de la línea CSV
         if (std::getline(iss, id, ',') &&
             std::getline(iss, nombre, ',') &&
             std::getline(iss, tipo, ',') &&
@@ -197,7 +220,15 @@ int Habitacion::cargarTodasLasHabitaciones(Sistema* sistema, Habitacion habitaci
             habitaciones[contador].setDireccion(dir);
             habitaciones[contador].setMunicipio(muni);
             habitaciones[contador].setDepartamento(depto);
-            habitaciones[contador].setPrecioNoche(std::stod(precioStr));
+
+            // Convertir precio de string a double
+            try {
+                habitaciones[contador].setPrecioNoche(std::stod(precioStr));
+            } catch (const std::exception& e) {
+                std::cerr << "Error convirtiendo precio: " << precioStr << std::endl;
+                habitaciones[contador].setPrecioNoche(0.0);
+            }
+
             habitaciones[contador].setAmenidades(amenidadesStr);
 
             // Buscar y asignar el anfitrión
@@ -206,11 +237,16 @@ int Habitacion::cargarTodasLasHabitaciones(Sistema* sistema, Habitacion habitaci
             if (habitaciones[contador].anfitrion != nullptr) {
                 contador++;
             } else {
-                std::cerr << "Error: Anfitrión con ID " << idAnfitrionStr << " no encontrado para habitación " << id << std::endl;
+                // Aún así agregamos la habitación sin anfitrión
+                contador++;
             }
+        } else {
+            std::cerr << "Error parseando línea: " << linea << std::endl;
         }
     }
+
     archivo.close();
+    std::cout << "Total de habitaciones cargadas: " << contador << std::endl;
     return contador;
 }
 
@@ -232,12 +268,24 @@ int Habitacion::obtenerHabitacionesPorAnfitrion(Sistema* sistema, const std::str
 }
 
 void Habitacion::cargarDBHabitaciones(Sistema* sistema) {
+    // Primero intentamos con ruta relativa
     std::ifstream archivo("habitaciones.txt");
     if (!archivo.is_open()) {
-        return;
+        // Si no funciona, intentamos con la ruta absoluta
+        archivo.open("C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/habitaciones.txt");
+        if (!archivo.is_open()) {
+            std::cerr << "Error: No se pudo abrir el archivo habitaciones.txt" << std::endl;
+            return;
+        }
     }
+
     std::string linea;
     while (std::getline(archivo, linea)) {
+        // Verificar que la línea no esté vacía
+        if (linea.empty()) {
+            continue;
+        }
+
         //estructura de datos
         std::string id, nombre, tipo, dir, muni, depto, amenidadesStr, precioStr, idAnfitrionStr;
         std::istringstream iss(linea);
@@ -258,18 +306,23 @@ void Habitacion::cargarDBHabitaciones(Sistema* sistema) {
             this->direccion = dir;
             this->municipio = muni;
             this->departamento = depto;
-            this->precioNoche = std::stod(precioStr);
+
+            // Convertir precio de string a double
+            try {
+                this->precioNoche = std::stod(precioStr);
+            } catch (const std::exception& e) {
+                std::cerr << "Error convirtiendo precio: " << precioStr << std::endl;
+                this->precioNoche = 0.0;
+            }
+
             this->setAmenidades(amenidadesStr);
             this->anfitrion = buscarAnfitrionporId(sistema, idAnfitrionStr);
+
             // Verificar si el anfitrión fue encontrado
             if (this->anfitrion == nullptr) {
-                std::cerr << "Error: Anfitrión con ID " << idAnfitrionStr << " no encontrado." << std::endl;
-                continue; // Saltar a la siguiente línea si el anfitrión no se encuentra
-            }
-            if (anfitrion != nullptr) {
-                std::cout << "Habitación cargada: " << nombre << " (ID: " << id << ")" << std::endl;
+                std::cout << "Advertencia: Anfitrión con ID " << idAnfitrionStr << " no encontrado para habitación " << nombre << std::endl;
             } else {
-                std::cout << "Anfitrión no encontrado para la habitación: " << nombre << std::endl;
+                std::cout << "Habitación cargada: " << nombre << " (ID: " << id << ")" << std::endl;
             }
         }
     }

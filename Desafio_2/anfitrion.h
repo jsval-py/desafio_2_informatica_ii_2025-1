@@ -5,8 +5,10 @@
 
 #include <string>
 #include "habitaciones.h"
+
 class Habitacion;
 class Reserva;
+class Sistema; // Forward declaration for Sistema
 
 class Anfitrion {
 private:

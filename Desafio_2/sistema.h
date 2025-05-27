@@ -9,6 +9,7 @@ class Sistema{
 private:
     std::string numIdentidad;
     std::string password;
+    std::string usuarioActual;
 
     // Objetos/clases que harán parte del sistema
     Huesped* huesped;
@@ -27,6 +28,7 @@ public:
     std::string getPassword() const { return password; }*/
     int getTipoUsuarioActual() const { return tipoUsuarioActual; }
     void setTipoUsuarioActual(int tipo) { tipoUsuarioActual = tipo; }
+    std::string getUsuarioActual() const;
 
     //Métodos
     bool validarUsuarioDB(const std::string& usuario, const std::string& password, int& tipoUsuarioIdentificado, float& puntuacion, int& antiguedad);
