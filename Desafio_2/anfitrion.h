@@ -1,15 +1,21 @@
 #ifndef ANFITRION_H
 #define ANFITRION_H
-#include "Fecha.h"
+#define MAX_HABITACIONES 50
+#define MAX_RESERVAS 100
 
+#include <string>
+#include "habitaciones.h"
 class Habitacion;
 class Reserva;
 
 class Anfitrion {
 private:
-    char* nombre;
+    std::string nombre;
     int antiguedad;
     int calificacion;
+    std::string numIdentidad; // Número de identidad del anfitrión
+    Habitacion* habitaciones[MAX_HABITACIONES]; // Suponiendo un máximo de habitaciones
+    Reserva* reservas[MAX_RESERVAS]; // Suponiendo un máximo de reservas
 
 public:
     // Constructores
@@ -20,18 +26,19 @@ public:
     ~Anfitrion();
 
     // Getters y setters
-    const char* getNombre() const;
+    std::string getNombre() const;
     int getAntiguedad() const;
-    int getCalificacion() const;
+    float getCalificacion() const;
+    std::string getnumIdentidad() const;
     void setNombre(const char* nom);
     void setAntiguedad(int ant);
-    void setCalificacion(int cal);
+    void setCalificacion(float cal);
+    void setnumIdentidad(const std::string& id);
 
     // Métodos
-    Anfitrion* login(const char* tipo, int num, const char* pass);
-    bool agregarHabitacion(Habitacion* hab);
-    bool eliminarHabitacionPorCodigo(int codigo);
-    Habitacion* consultarReservas(Fecha inicio, Fecha fin);
+    void consultarHabitaciones(Sistema* sistema);
+    // consultarReservas()
+    // anularReserva()
 };
 
 #endif // ANFITRION_H

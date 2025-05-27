@@ -1,38 +1,35 @@
 #ifndef HUESPED_H
 #define HUESPED_H
-
+#include <string>
 class Reserva;
 
 class Huesped {
 private:
-    char* nombre;
+    std::string nombre;
     int antiguedad;
-    int calificacion;
-    float puntuacion;
+    float calificacion;
+    std::string numIdentidad;
 
 public:
     // Constructores
     Huesped();
-    Huesped(const char* nom, int num, int pass);
-
     // Destructor
     ~Huesped();
 
     // Getters y setters
-    const char* getNombre() const;
+    std::string getNombre() const;
     int getAntiguedad() const;
-    int getCalificacion() const;
-    float getPuntuacion() const;
+    float getCalificacion() const;
+    std::string getnumIdentidad() const;
     void setNombre(const char* nom);
     void setAntiguedad(int ant);
-    void setCalificacion(int cal);
-    void setPuntuacion(float punt);
+    void setCalificacion(float cal);
+    void setnumIdentidad(const std::string& id);
 
     // Métodos
-    Huesped* login(const char* tipo, int num, int pass);
-    Reserva* consultarReservas();
     Reserva* crearReserva(Reserva* res);
     bool anularReserva(int codigoReserva);
+    void consultarReservas() const;
 };
 
 #endif // HUESPED_H

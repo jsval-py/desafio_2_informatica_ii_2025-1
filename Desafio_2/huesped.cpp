@@ -1,63 +1,28 @@
+#include <cstring>
 #include "huesped.h"
 
-//Constructores
-Huesped::Huesped() {
-    nombre = nullptr;
+Huesped::Huesped(){
+    nombre = "";
     antiguedad = 0;
-    calificacion = 0;
-    puntuacion = 0.0f;
-}
-Huesped::Huesped(const char* nom, int num, int pass) {
-    nombre = new char[strlen(nom) + 1];
-    strcpy(nombre, nom);
-    antiguedad = num;
-    calificacion = pass;
-    puntuacion = 0.0f;
+    calificacion = 0.0f;
+    numIdentidad = "";
 }
 
-//Destructor
 Huesped::~Huesped() {
-    delete[] nombre;
+    // Destructor vacío, ya que no hay memoria dinámica que liberar
 }
 
-//Getters y setters
-const char* Huesped::getNombre() const {
-    return nombre;
-}
-int Huesped::getAntiguedad() const {
-    return antiguedad;
-}
-int Huesped::getCalificacion() const {
-    return calificacion;
-}
-float Huesped::getPuntuacion() const {
-    return puntuacion;
-}
+std::string Huesped::getNombre() const { return nombre; }
+int Huesped::getAntiguedad() const { return antiguedad; }
+float Huesped::getCalificacion() const { return calificacion; }
+std::string Huesped::getnumIdentidad() const { return numIdentidad; }
 void Huesped::setNombre(const char* nom) {
-    delete[] nombre;
-    nombre = new char[strlen(nom) + 1];
-    strcpy(nombre, nom);
+    if (nom != nullptr) {
+        nombre = nom;
+    } else {
+        nombre = "";
+    }
 }
-void Huesped::setAntiguedad(int ant) {
-    antiguedad = ant;
-}
-void Huesped::setCalificacion(int cal) {
-    calificacion = cal;
-}
-void Huesped::setPuntuacion(float punt) {
-    puntuacion = punt;
-}
-
-//Métodos
-Huesped* Huesped::login(const char* tipo, int num, int pass) {
-    return this;
-}
-Reserva* Huesped::consultarReservas() {
-    return nullptr;
-}
-Reserva* Huesped::crearReserva(Reserva* res) {
-    return res;
-}
-bool Huesped::anularReserva(int codigoReserva) {
-    return true;
-}
+void Huesped::setAntiguedad(int ant) { antiguedad = ant; }
+void Huesped::setCalificacion(float cal) { calificacion = cal; }
+void Huesped::setnumIdentidad(const std::string& id) { numIdentidad = id; }
