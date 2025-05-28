@@ -3,6 +3,7 @@
 #include <string>
 #include "fecha.h"
 #include "sistema.h"
+#include "anfitrion.h"
 
 class Anfitrion;
 class Sistema;
@@ -21,6 +22,8 @@ private:
     std::string amenidades[MAX_AMENIDADES];
     Anfitrion* anfitrion;
     Sistema* sistema;
+    Reserva* reservas[MAX_RESERVAS];
+    int totalReservas;
 
 public:
     // Constructores
@@ -50,6 +53,7 @@ public:
     void setPrecioNoche(double precio);
     std::string getIdAnfitrion() const;
 
+
     // Métodos para mostrar información
     void mostrarInformacion() const;
 
@@ -61,6 +65,15 @@ public:
     // Métodos originales
     void cargarDBHabitaciones(Sistema* sistema);
     static Anfitrion* buscarAnfitrionporId(Sistema* sistema, const std::string& idAnfitrionStr);
+    // Métodos de gestión de reservas
+    void mostrarReservas() const;
+    void agregarReserva(const Reserva& reserva);
+    bool cancelarReservaPorId(const char* idReserva);
+
+    // Métodos para la persistencia de reservas
+    void cargarReservasDeArchivo(const char* nombreArchivo);
+    void guardarReservasEnArchivo(const char* nombreArchivo) const;
+
 };
 
 #endif // HABITACIONES_H

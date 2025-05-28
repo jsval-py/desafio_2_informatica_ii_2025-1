@@ -164,7 +164,5 @@ void Sistema::mostrarMenuHuesped() {
 void Sistema::mostrarMenuAnfitrion() {
     std::cout << "\n=== MENÚ ===" << std::endl;
     std::cout << "1. Consultar mis habitaciones" << std::endl;
-    std::cout << "2. Consultar reservas recibidas" << std::endl;
-    std::cout << "3. Cancelar reserva recibida" << std::endl;
-    std::cout << "4. Cerrar sesión" << std::endl;
+    std::cout << "2. Cerrar sesión" << std::endl;
 }

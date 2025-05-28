@@ -23,9 +23,6 @@ public:
     ~Sistema();
 
     // Getters y setters
-    /*std::string getNumIdentidad() const { return numIdentidad; }
-    void setNumIdentidad(const std::string& id) { numIdentidad = id; }
-    std::string getPassword() const { return password; }*/
     int getTipoUsuarioActual() const { return tipoUsuarioActual; }
     void setTipoUsuarioActual(int tipo) { tipoUsuarioActual = tipo; }
     std::string getUsuarioActual() const;

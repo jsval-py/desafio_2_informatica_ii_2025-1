@@ -8,7 +8,7 @@
 
 class Habitacion;
 class Reserva;
-class Sistema; // Forward declaration for Sistema
+class Sistema;
 
 class Anfitrion {
 private:

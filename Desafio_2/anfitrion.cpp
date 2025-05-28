@@ -1,8 +1,8 @@
-#include "anfitrion.h"
-#include "habitaciones.h"
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include "anfitrion.h"
+#include "habitaciones.h"
 
 //Constructor
 Anfitrion::Anfitrion() {
@@ -59,6 +59,38 @@ void Anfitrion::consultarHabitaciones(Sistema* sistema) {
 
     std::cout << "Habitaciones del anfitrión " << nombre << ":" << std::endl;
     for (int i = 0; i < totalHabitaciones; ++i) {
+        std::cout << "-----------------------------" << std::endl;
         habitacionesDelAnfitrion[i].mostrarInformacion();
+
+        // Submenú para gestionar reservas de la habitación
+        int opcionReserva = 0;
+        do {
+            std::cout << "\nGestión de reservas para esta habitación:" << std::endl;
+            std::cout << "1. Ver reservas" << std::endl;
+            std::cout << "2. Agregar reserva" << std::endl;
+            std::cout << "3. Cancelar reserva" << std::endl;
+            std::cout << "4. Volver al listado de habitaciones" << std::endl;
+            std::cout << "Seleccione una opción: ";
+            std::cin >> opcionReserva;
+            std::cin.ignore();
+
+            switch(opcionReserva) {
+            case 1:
+                habitacionesDelAnfitrion[i].cargarReservasDeArchivo("C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/reservasActivas.txt");
+                habitacionesDelAnfitrion[i].mostrarReservas(); // Debes implementar este método
+                break;
+            case 2:
+                /*habitacionesDelAnfitrion[i].agregarReserva(); // Debes implementar este método
+                break;*/
+            case 3:
+                /*habitacionesDelAnfitrion[i].cancelarReserva(); // Debes implementar este método
+                break;*/
+            case 4:
+                // Volver al listado de habitaciones
+                break;
+            default:
+                std::cout << "Opción inválida." << std::endl;
+            }
+        } while(opcionReserva != 4);
     }
 }

@@ -58,13 +58,13 @@ void InicioSesion(Sistema& sistema) {
             case 1:
             {
                 // Opción 1: Consultar habitaciones del anfitrión
-                // Ya tienes el anfitrión cargado en el sistema, simplemente llama al método
-                // Pero necesitas acceder al objeto anfitrion del sistema
-
+                cout << "Consultando habitaciones..." << endl;
                 // Alternativa 1: Crear un anfitrión temporal (más simple)
                 Anfitrion anfitrionTemp;
                 anfitrionTemp.setnumIdentidad(sistema.getUsuarioActual());
                 anfitrionTemp.consultarHabitaciones(&sistema);
+                break;
+                //Desde acá crear un menú para cada habitacion y despues mirar que reservas tiene para así gestionarlas
             }
             case 2:
                 cout << "Cerrando sesión..." << endl;

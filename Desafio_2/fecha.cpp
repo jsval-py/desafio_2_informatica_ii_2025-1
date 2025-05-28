@@ -1,11 +1,11 @@
 #include "fecha.h"
+#include <iostream>
+#include <iomanip>
+#include <sstream>
 
 //Constructores
-Fecha::Fecha(int d, int m, int a){
-    dia = d;
-    mes = m;
-    anio = a;
-}
+Fecha::Fecha() : dia(1), mes(1), anio(2000) {}
+Fecha::Fecha(int d, int m, int a) : dia(d), mes(m), anio(a) {}
 
 //Getters y setters
 int Fecha::getDia() const { return dia; }
@@ -16,8 +16,29 @@ void Fecha::setMes(int m) { mes = m; }
 void Fecha::setAnio(int a) { anio = a; }
 
 //Métodos
-Fecha Fecha::toString() const {
-    return Fecha(dia, mes, anio);
+void Fecha::mostrar() const {
+    // Imprime la fecha en formato DD/MM/AAAA
+    std::cout << std::setfill('0') << std::setw(2) << dia << "/"
+              << std::setw(2) << mes << "/"
+              << anio << std::endl;
+}
+
+std::string Fecha::toString() const {
+    std::ostringstream oss;
+    oss << anio << "-";
+    if (mes < 10) oss << "0";
+    oss << mes << "-";
+    if (dia < 10) oss << "0";
+    oss << dia;
+    return oss.str();
+}
+
+Fecha Fecha::fromString(const std::string& str) {
+    int y, m, d;
+    char sep1, sep2;
+    std::istringstream iss(str);
+    iss >> y >> sep1 >> m >> sep2 >> d;
+    return Fecha(d, m, y); // Ajusta según tu constructor
 }
 
 // Método para calcular la fecha de salida sumando noches a la fecha actual
@@ -52,3 +73,4 @@ Fecha Fecha::calcularFechaSalida(int noches) const {
 
     return fechaSalida;
 }
+

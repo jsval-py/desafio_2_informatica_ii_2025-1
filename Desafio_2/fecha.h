@@ -1,5 +1,6 @@
 #ifndef FECHA_H
 #define FECHA_H
+#include <string>
 
 class Fecha {
 private:
@@ -21,7 +22,9 @@ public:
     void setAnio(int a);
 
     // Métodos
-    Fecha toString() const;
+    void mostrar() const;
+    std::string toString() const;
+    static Fecha fromString(const std::string& str);
     Fecha calcularFechaSalida(int noches) const;
 };
 

@@ -1,25 +1,26 @@
-#include "habitaciones.h"
-#include "anfitrion.h"
-#include "sistema.h"
-#include <string>
+#include <string.h>
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include "habitaciones.h"
+#include "anfitrion.h"
+#include "reservas.h"
+#include "sistema.h"
 
-Habitacion::Habitacion() {
+Habitacion::Habitacion() : totalReservas(0) {
     idHabitacion = "";
     nombreHabitacion = "";
     tipoHabitacion = "";
     direccion = "";
     municipio = "";
     departamento = "";
-    //Amenidades
     for (int i = 0; i < MAX_AMENIDADES; ++i) {
         amenidades[i] = "";
     }
     precioNoche = 0.0;
     anfitrion = nullptr;
     sistema = nullptr;
+    // reservas[] y totalReservas ya inicializados
 }
 
 Habitacion::Habitacion(const std::string& id, const std::string& nombre, const std::string& tipo, const std::string& dir,
@@ -138,7 +139,7 @@ void Habitacion::mostrarInformacion() const {
 
 Anfitrion* Habitacion::buscarAnfitrionporId(Sistema*, const std::string& idAnfitrionStr){
     // Primero intentamos con ruta relativa
-    std::ifstream archivo("habitaciones.txt");
+    std::ifstream archivo("C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/usuarios.txt");
     if (!archivo.is_open()) {
         // Si no funciona, intentamos con la ruta absoluta
         archivo.open("C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/usuarios.txt");
@@ -269,7 +270,7 @@ int Habitacion::obtenerHabitacionesPorAnfitrion(Sistema* sistema, const std::str
 
 void Habitacion::cargarDBHabitaciones(Sistema* sistema) {
     // Primero intentamos con ruta relativa
-    std::ifstream archivo("habitaciones.txt");
+    std::ifstream archivo("C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/habitaciones.txt");
     if (!archivo.is_open()) {
         // Si no funciona, intentamos con la ruta absoluta
         archivo.open("C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/habitaciones.txt");
@@ -327,4 +328,47 @@ void Habitacion::cargarDBHabitaciones(Sistema* sistema) {
         }
     }
     archivo.close();
+}
+
+void Habitacion::cargarReservasDeArchivo(const char* nombreArchivo) {
+    // Limpiar reservas actuales
+    totalReservas = 0;
+
+    // Cargar todas las reservas
+    Reserva todasLasReservas[1000];
+    int totalCargadas = Reserva::cargarReservasDeArchivo(todasLasReservas, 1000, nombreArchivo);
+
+    // Filtrar solo las de esta habitación
+    for (int i = 0; i < totalCargadas && totalReservas < MAX_RESERVAS; ++i) {
+        if (strcmp(todasLasReservas[i].getIdHabitacion(), this->getIdHabitacion().c_str()) == 0) {
+            // Crear una copia dinámica de la reserva
+            reservas[totalReservas] = new Reserva(todasLasReservas[i]);
+            totalReservas++;
+        }
+    }
+
+    std::cout << "Cargadas " << totalReservas << " reservas para la habitación " << nombreHabitacion << std::endl;
+}
+
+void Habitacion::mostrarReservas() const {
+    std::cout << "=== Reservas para la habitación: " << nombreHabitacion << " ===" << std::endl;
+
+    // Cargar todas las reservas desde archivo
+    Reserva todasLasReservas[1000]; // Ajusta el tamaño según necesites
+    int totalReservasCargadas = Reserva::cargarReservasDeArchivo(todasLasReservas, 1000, "C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_2_informatica_ii_2025-1/Desafio_2/Memoria/reservasActivas.txt");
+
+    bool algunaEncontrada = false;
+
+    // Buscar reservas que correspondan a esta habitación
+    for (int i = 0; i < totalReservasCargadas; ++i) {
+        if (strcmp(todasLasReservas[i].getIdHabitacion(), this->getIdHabitacion().c_str()) == 0) {
+            todasLasReservas[i].mostrarInformacion();
+            std::cout << "-----------------" << std::endl;
+            algunaEncontrada = true;
+        }
+    }
+
+    if (!algunaEncontrada) {
+        std::cout << "No hay reservas para esta habitación." << std::endl;
+    }
 }
